@@ -3,7 +3,38 @@
     <ul *ngFor="let item of items" class="collection">
         <!-- bracket paor color -->
         <li class="collection-item"
-            (dblclick)="deleteItem($event, item)"><strong>{{item.title}}: </strong>{{item.description}}</li>
+            (dblclick)="deleteItem($event, item)"><strong>{{item.title}}: </strong>{{item.description}}
+            <a class="secondary-content">
+                <i (click)="editItem($event, item)" class="fa fa-pencil"></i>
+                <i (click)="clearState()" class="fa fa-compress"
+                *ngIf="editState && itemToEdit.id == item.id"
+                ></i>
+            </a>
+            <!-- aq aidebis shemowmeba imito unda rom clickze mtlianad item: Item gadadis
+            da mxolod edistate rom davtovot yvelastvis tru gaxdeba, 
+            aidebit rom vadarebt ukve vrwmundebit rom mxolod qarent itemistvis gamochndeba,
+            meore shemowmebis gareshe yvelastvis chamoishleboda -->
+            <div *ngIf="editState && itemToEdit.id == item.id">
+                <form (ngSubmit)="updateItem(item)">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" 
+                                   placeholder="add title" 
+                                   [(ngModel)]="item.title"
+                                   name="title">
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" 
+                                   placeholder="add description" 
+                                   [(ngModel)]="item.description"
+                                   name="title">
+                        </div>
+                        <input type="submit" value="Update Item" class="btn orange">
+                        <button (click)="deleteItem($event, item)" class="btn red">delete item</button>
+                    </div>
+                </form>
+            </div>
+        </li>
     </ul>
 </div>
 <ng-template #noItems>
