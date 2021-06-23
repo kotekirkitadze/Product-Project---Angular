@@ -1,1 +1,12 @@
-<p>items works!</p>
+<!-- no items is going to be the name of ou template -->
+<div *ngIf="items?.length > 0; noItems">
+    <ul *ngFor="let item of items" class="collection">
+        <!-- bracket paor color -->
+        <li class="collection-item"><strong>{{item.title}}: </strong>{{item.description}}</li>
+    </ul>
+</div>
+
+<ng-template #noItems>
+    <hr>
+    <h5>No items in the list</h5>
+</ng-template>

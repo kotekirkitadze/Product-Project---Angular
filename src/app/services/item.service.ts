@@ -4,6 +4,7 @@ import {
   AngularFirestoreCollection,
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
+import { Observable } from 'rxjs';
 
 import { Item } from "../models/item"
 // AngularFireStoreDocument - represents single documents
@@ -13,6 +14,16 @@ import { Item } from "../models/item"
 @Injectable()
 export class ItemService {
   itemsCollection: AngularFirestoreCollection<Item>;
+  items: Observable<Item[]>;
 
-  constructor(public afs: AngularFirestore) { }
+  constructor(public afs: AngularFirestore) { 
+    //valueChanges returns our collection as observable
+    //but valuchanges does nt rerun id, later we get id by snapshot method
+    this.items = this.afs.collection('items').valueChanges();
+  }
+
+
+  getItems(){
+    return this.items;
+  }
 }
